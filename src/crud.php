@@ -28,37 +28,26 @@ function queryBuilder($method, $table, ...$payload){
 
 
     }
-    if($method ==="c"){
-        $columnParse  = '(';
-        $valueParse  = '(';
+    if ($method === "c") {
+        $columns = [];
+        $values = [];
+    
         foreach ($payload as $index => $column) {
             foreach ($column as $key => $value) {
-                if(is_string($value)){
-                    $value = "\"" . $value. "\"";
+                $columns[] = "`" . $key . "`";
+                if (is_string($value)) {
+                    $value = "'" . $value . "'";
                 }
-                $columnParse .= "`" . $key . "`"; 
-                 if(!(count($payload) == ($index + 1 ))){
-                $columnParse .= ", ";
+                $values[] = $value;
             }
-            }
-
         }
-        $columnParse.= ")";
-             foreach ($payload as $index => $column) {
-            foreach ($column as $key => $value) {
-                if(is_string($value)){
-                    $value = "\"" . $value. "\"";
-                }
-                $valueParse .= $value ; 
-                 if(!(count($payload) == ($index + 1 ))){
-                $valueParse .= ", ";
-            }
-            }
-
-        }
-        $valueParse.= ")";
-        $query .= $columnParse . " VALUES " . $valueParse;
+    
+        $columnString = implode(", ", $columns);
+        $valueString = implode(", ", $values);
+        $query .= "($columnString) VALUES ($valueString)";
     }
+    
+    
     if($method ==='u'){
         foreach ($payload as $index => $filter) {
             foreach ($filter as $key => $value) {
