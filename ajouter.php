@@ -1,6 +1,8 @@
 <?php
 
 require_once './configs/bootstrap.php';
+require_once './src/crud.php';
+require_once './src/Entity/Etudiant.php';
 ob_start();
 
 if(isset($_GET["page"])){
@@ -20,56 +22,7 @@ if(isset($_GET["layout"])){
 }
 ?>
 
-<style>
-form {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
-</style>
-
-<form action="index.php" method="post">
+<form action="ajouter.php" method="post">
   <ul>
     <li>
       <label for="nom">Nom&nbsp;:</label>
@@ -105,8 +58,8 @@ if(isset($_POST['nom'])&& isset($_POST['prenom']) && isset($_POST['telephone']) 
   $adresse = $_POST['adresse'];
 
   $etudiant = new Etudiant($nom, $prenom, $telephone, $mail, $adresse);
-  $etudiant->create();
-  header('Location: index.php');
+  create($etudiant);
+  header('Location: index.php?page=accueil');
   exit();
 
 }

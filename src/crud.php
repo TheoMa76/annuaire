@@ -14,7 +14,7 @@ function queryBuilder($method, $table, ...$payload){
             $query .= "UPDATE ";
             break;
         case 'd':
-            $query .= "DELETE ";
+            $query .= "DELETE FROM ";
             break;
         default:
            
@@ -56,15 +56,11 @@ function queryBuilder($method, $table, ...$payload){
                         $value = "\"" . $value. "\"";
                     }
                     
-                    $query .= "`" . $key . "` = ". $value .' ' ; 
-                    
-                    if(!(count($payload) == ($index + 2 ))){
-                        $query .= ", ";
-                    }
+                    $queryParts[] = "`" . $key . "` = ". $value;                    
                 }
             }
-
         }
+        $query .= implode(", ", $queryParts);
     }
     if($method !=='c' && $method !== "u" && count($payload)){
         $query .= "WHERE ";
@@ -73,12 +69,7 @@ function queryBuilder($method, $table, ...$payload){
                 if(is_string($value)){
                     $value = "\"" . $value. "\"";
                 }
-                $query .= "`" . $key . "` = ". $value . " AND "; 
-            }
-            if(count($payload) == ($index + 1 ) && $method !=='r'){
-                $query .= "1";
-            } else if(count($payload) == ($index + 1 )) {
-                $query .= '`status` = "online"';
+                $query .= "`" . $key . "` = ". $value; 
             }
         }
     } else if($method === "u"){
@@ -100,11 +91,81 @@ function queryBuilder($method, $table, ...$payload){
     
    return $query;
 
-} 
-// dd(queryBuilder("c", "voiture", ["modele" =>"Ferrari"], ["couleur" => "rouge" ], ["test" => "taste"]));
-// dd(queryBuilder("r", "contacts",  ["name" => "Delaistre" ]));
-// dd(queryBuilder("u", "voiture", ["modele" => "Ferrari" ], ["couleur" => "rouge" ], ["id" => 2]));
-// dd(queryBuilder("d", "voiture", ["modele" => "Ferrari" ], ["couleur" => "rouge" ]));
+}
+
+
+/*fonction create qui prend en paremetre n'importe quel objet , récupère ses attributs et détermine
+le nom de la table en fonction du nom de la class ( class : Etudiant -> nom table : etudiant )*/
+
+function create(Object $object){
+    $attributs = [];
+    $reflectionClass = new ReflectionClass($object);
+    $proprietes = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
+    $nomClass = $reflectionClass->getShortName();
+    $nomTable = strtolower($nomClass);
+    
+    foreach($proprietes as $propriete){
+        $nomPropriete = $propriete->getName();
+        $propriete->setAccessible(true);
+        $attributs[$nomPropriete] = $propriete->getValue($object);
+    }
+    $query = queryBuilder('c',$nomTable, $attributs);
+    global $connection;
+    try {
+        $statement = $connection->prepare($query);
+        $statement->execute();
+        echo "Succès !";
+    } catch(PDOException $e) {
+        echo $query . "<br>" . $e->getMessage();
+    }
+}
+
+/*fonction update qui prend en paremetre n'importe quel objet , récupère ses attributs et détermine
+le nom de la table en fonction du nom de la class ( class : Etudiant -> nom table : etudiant )*/
+function update(Object $object, int $id){
+    $attributs = [];
+    $reflectionClass = new ReflectionClass($object);
+    $proprietes = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
+    $nomClass = $reflectionClass->getShortName();
+    $nomTable = strtolower($nomClass);
+    
+    foreach($proprietes as $propriete){
+        $nomPropriete = $propriete->getName();
+        $propriete->setAccessible(true);
+        $attributs[$nomPropriete] = $propriete->getValue($object);
+    }
+
+    $query = queryBuilder('u', $nomTable, $attributs, ["id" => $id]);
+    dd($query);
+
+    global $connection;
+    try {
+        $statement = $connection->prepare($query);
+        $statement->execute();
+        echo "L'objet a été mis à jour avec succès.";
+    } catch(PDOException $e) {
+        echo $query . "<br>" . $e->getMessage();
+    }
+}
+
+function delete(Object $object, int $id){
+    $attributs = [];
+    $reflectionClass = new ReflectionClass($object);
+    $proprietes = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
+    $nomClass = $reflectionClass->getShortName();
+    $nomTable = strtolower($nomClass);
+    
+    $query = queryBuilder('d', $nomTable, ["id" => $id]);
+
+    global $connection;
+    try {
+        $statement = $connection->prepare($query);
+        $statement->execute();
+        echo "L'objet a été supprimé avec succès.";
+    } catch(PDOException $e) {
+        echo $query . "<br>" . $e->getMessage();
+    }
+}
 
 
 

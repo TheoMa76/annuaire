@@ -17,47 +17,44 @@ class Etudiant{
         $this->adresse = $adresse;
     }
 
-    public function create(){
-        $tableName = 'etudiant';
-        $query = queryBuilder('c', $tableName, [
-            'nom' => $this->nom,
-            'prenom' => $this->prenom,
-            'telephone' => $this->telephone,
-            'mail' => $this->mail,
-            'adresse' => $this->adresse
-        ]);
-        global $connection;
-        dd($query);
-            $statement = $connection->prepare($query);
-            $statement->execute();
-            echo "Étudiant inséré avec succès !";
-    }
 
-    public function update($id){
-        $tableName = 'etudiant';
-        $query = queryBuilder('u', $tableName, [
-            'nom' => $this->nom,
-            'prenom' => $this->prenom,
-            'telephone' => $this->telephone,
-            'mail' => $this->mail,
-            'adresse' => $this->adresse,
-            'id' => $id
-        ]);
+        public function getNom(): string {
+            return $this->nom;
+        }
     
-        global $connection;
-        $statement = $connection->prepare($query);
-        $statement->execute();
-        echo "Étudiant mis à jour avec succès !";
-
-    }
+        public function setNom(string $nom): void {
+            $this->nom = $nom;
+        }
     
+        public function getPrenom(): string {
+            return $this->prenom;
+        }
+    
+        public function setPrenom(string $prenom): void {
+            $this->prenom = $prenom;
+        }
+    
+        public function getTelephone(): string {
+            return $this->telephone;
+        }
+    
+        public function setTelephone(string $telephone): void {
+            $this->telephone = $telephone;
+        }
+    
+        public function getMail(): string {
+            return $this->mail;
+        }
 
-    public function delete(){
-
-    }
-
-    public function getAll(){
-
-    }
-
+        public function setMail(string $mail): void {
+            $this->mail = $mail;
+        }
+    
+        public function getAdresse(): string {
+            return $this->adresse;
+        }
+    
+        public function setAdresse(string $adresse): void {
+            $this->adresse = $adresse;
+        }
 }

@@ -1,4 +1,4 @@
-<h1>Bienvenue sur mon site web !</h1>
+<h1>Annuaire des étudiants.</h1>
 
 <?php
 include './templates/includes/form.inc.php';
