@@ -3,5 +3,5 @@
 
 
 <div class="navbar">
-        <a href="./?page=annuaire">Annuaire</a>
+        <a href="index.php">Retour</a>
     </div>

@@ -1,6 +1,7 @@
 <?php
 
 require_once './configs/bootstrap.php';
+include_once './templates/includes/menu.inc.php';
 
 ob_start();
 
@@ -82,7 +83,7 @@ if(isset($_POST['nom'])&& isset($_POST['prenom']) && isset($_POST['telephone']) 
 
 
   update($etudiant, $id);
-  header('Location: index.php?page=annuaire');
+  header('Location: index.php');
   exit();
 
 }

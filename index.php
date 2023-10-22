@@ -1,3 +1,5 @@
+<h1>Annuaire des étudiants.</h1>
+
 <?php
 
 require_once './configs/bootstrap.php';
