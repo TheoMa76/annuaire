@@ -1,5 +1,5 @@
 <?php 
-require_once "./src/dbConnect.php";
+require_once "./configs/bootstrap.php";
 
 function queryBuilder($method, $table, ...$payload){
     $query ="";

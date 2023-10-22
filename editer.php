@@ -1,8 +1,7 @@
 <?php
 
 require_once './configs/bootstrap.php';
-require_once './src/crud.php';
-require_once './src/Entity/Etudiant.php';
+
 ob_start();
 
 if(isset($_GET["page"])){
@@ -44,34 +43,34 @@ if (isset($_GET['id'])) {
     exit();
 }
 ?>
+<div class="form-crud">
+  <form action="editer.php<?php if(!empty($_SERVER['QUERY_STRING'])) { echo '?' . $_SERVER['QUERY_STRING']; } ?>" method="post">
+    <ul>
+      <li><input type="hidden" name="id" value="<?php echo $etudiantData['id']; ?>"></input></li>
+      <li>
+        <label for="nom">Nom&nbsp;:</label>
+        <input type="text" id="nom" name="nom"  value="<?php echo $etudiant->getNom();?>" />
+      </li>
+      <li>
+        <label for="prenom">Prénom&nbsp;:</label>
+        <input type="text" id="prenom" name="prenom" value="<?php echo $etudiant->getPrenom(); ?>"/>
+      </li>
+      <li>
+        <label for="telephone" >Téléphone&nbsp;:</label>
+        <input type="text" id="telephone" name="telephone" value="<?php echo $etudiant->getTelephone(); ?>"/>
+      </li>
+      <li>
+        <label for="mail" >Mail&nbsp;:</label>
+        <input type="text" id="mail" name="mail" value="<?php echo $etudiant->getMail(); ?>"/>
+      </li>
+      <li>
+        <label for="adresse" >Adresse&nbsp;:</label>
+        <input type="text" id="adresse" name="adresse" value="<?php echo $etudiant->getAdresse(); ?>"/>
+      </li>
 
-<form action="editer.php<?php if(!empty($_SERVER['QUERY_STRING'])) { echo '?' . $_SERVER['QUERY_STRING']; } ?>" method="post">
-  <ul>
-    <li><input type="hidden" name="id" value="<?php echo $etudiantData['id']; ?>"></input></li>
-    <li>
-      <label for="nom">Nom&nbsp;:</label>
-      <input type="text" id="nom" name="nom"  value="<?php echo $etudiant->getNom();?>" />
-    </li>
-    <li>
-      <label for="prenom">Prénom&nbsp;:</label>
-      <input type="text" id="prenom" name="prenom" value="<?php echo $etudiant->getPrenom(); ?>"/>
-    </li>
-    <li>
-      <label for="telephone" >Téléphone&nbsp;:</label>
-      <input type="text" id="telephone" name="telephone" value="<?php echo $etudiant->getTelephone(); ?>"/>
-    </li>
-    <li>
-      <label for="mail" >Mail&nbsp;:</label>
-      <input type="text" id="mail" name="mail" value="<?php echo $etudiant->getMail(); ?>"/>
-    </li>
-    <li>
-      <label for="adresse" >Adresse&nbsp;:</label>
-      <input type="text" id="adresse" name="adresse" value="<?php echo $etudiant->getAdresse(); ?>"/>
-    </li>
-
-  </ul>
-  <input type="submit" value="Éditer">
-</form>
+    </ul>
+    <input type="submit" value="Éditer">
+  </form>
 <?php
 
 if(isset($_POST['nom'])&& isset($_POST['prenom']) && isset($_POST['telephone']) && isset($_POST['mail'])){
@@ -83,7 +82,7 @@ if(isset($_POST['nom'])&& isset($_POST['prenom']) && isset($_POST['telephone']) 
 
 
   update($etudiant, $id);
-  header('Location: index.php?page=accueil');
+  header('Location: index.php?page=annuaire');
   exit();
 
 }

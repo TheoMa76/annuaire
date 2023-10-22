@@ -12,3 +12,6 @@ $pageContent = [
 
 ];
     include "./templates/layout/html.layout.php";
+    require_once "./templates/includes/listUsers.inc.php";
+    include_once "./templates/includes/html_header.inc.php";
+    include_once "./templates/includes/html_footer.inc.php";

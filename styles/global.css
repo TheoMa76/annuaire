@@ -1,16 +1,4 @@
 
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        background-color: #f9f9f9;
-        margin: 0.5em 0;
-        padding: 1em;
-        border-radius: 5px;
-    }
-
     h4, h5 {
         margin: 0.5em 0;
     }
@@ -67,7 +55,7 @@
         content: ' ▼';
     }
 
-    form {
+    .form-crud form {
         max-width: 400px;
         margin: auto;
         padding: 20px;
@@ -114,3 +102,75 @@
         background-color: #45a049;
     }
     
+    .recherche form{
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    body {
+        font-family: 'Calibri', sans-serif;
+    }
+    
+    h1 {
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        font-size: 2.5em;
+        color: #333;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .action-button.ajouter-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 3px #999;
+    }
+    
+    .action-button.ajouter-button:hover {
+        background-color: #45a049;
+    }
+    
+    .action-button.ajouter-button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 2px #666;
+        transform: translateY(1px);
+    }
+
+    .navbar {
+        display: inline-block;
+    }
+    
+    .navbar a {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+    }
+    
+    .navbar a:hover {
+        background-color: #45a049;
+    }
+    
+    .navbar a:active {
+        background-color: #3e8e41;
+    }

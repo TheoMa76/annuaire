@@ -1,7 +1,5 @@
 <?php
 
-require_once('./src/crud.php');
-
 class Etudiant{
     protected string $nom;
     protected string $prenom;
